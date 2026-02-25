@@ -491,13 +491,15 @@ function CompanyDetail({ company, onBack }) {
   const status = getAgentStatus(company);
 
   return (
-    <div style={{ minHeight: "100vh", background: T.bg, fontFamily: "'Syne', sans-serif", color: T.text }}>
+    <div style={{ minHeight: "100vh", background: T.bg, fontFamily: "'Syne', sans-serif", color: T.text, overflowX: "hidden", width: "100%" }}>
       {modal && <ContributeModal company={company} onClose={() => setModal(false)} />}
-      <header style={{ background: "rgba(10,10,15,0.92)", borderBottom: `1px solid ${T.border}`, padding: "15px 22px", display: "flex", alignItems: "center", gap: 14, position: "sticky", top: 0, zIndex: 40, backdropFilter: "blur(12px)" }}>
-        <button onClick={onBack} style={{ background: "none", border: "none", cursor: "pointer", display: "flex", alignItems: "center", gap: 4, color: T.muted, fontSize: 14, fontFamily: "'Syne', sans-serif" }}>
-          <ChevronLeft size={17} /> Back
-        </button>
-        <Logo />
+      <header style={{ background: "rgba(10,10,15,0.92)", borderBottom: `1px solid ${T.border}`, position: "sticky", top: 0, zIndex: 40, backdropFilter: "blur(12px)" }}>
+        <div style={{ maxWidth: 660, margin: "0 auto", padding: "15px 22px", display: "flex", alignItems: "center", gap: 14 }}>
+          <button onClick={onBack} style={{ background: "none", border: "none", cursor: "pointer", display: "flex", alignItems: "center", gap: 4, color: T.muted, fontSize: 14, fontFamily: "'Syne', sans-serif" }}>
+            <ChevronLeft size={17} /> Back
+          </button>
+          <Logo />
+        </div>
       </header>
       <div style={{ maxWidth: 620, margin: "0 auto", padding: "24px 18px 60px" }}>
 
@@ -531,7 +533,7 @@ function CompanyDetail({ company, onBack }) {
           {nowWait > 0 && status.human ? (
             <>
               <div style={{ display: "flex", alignItems: "baseline", gap: 10 }}>
-                <span style={{ fontSize: 50, fontWeight: 800, color: waitColor(nowWait) }}>~{nowWait}</span>
+                <span style={{ fontSize: 50, fontWeight: 800, color: waitColor(nowWait) }}>~{Math.abs(nowWait)}</span>
                 <span style={{ fontSize: 17, color: T.muted }}>min wait</span>
               </div>
               <p style={{ color: T.faint, fontSize: 13, marginTop: 7, display: "flex", alignItems: "center", gap: 5 }}><Users size={13} /> Shared by the community · Updated hourly</p>
@@ -640,11 +642,13 @@ export default function DialTrendApp() {
         {showOnboarding && <HowItWorksPanel onClose={() => setShowOnboarding(false)} />}
 
         {/* Header */}
-        <header style={{ display: "flex", justifyContent: "space-between", alignItems: "center", padding: "15px 22px", borderBottom: `1px solid ${T.border}`, background: "rgba(10,10,15,0.92)", position: "sticky", top: 0, zIndex: 50, backdropFilter: "blur(12px)" }}>
-          <Logo />
-          <button onClick={() => setMenuOpen(true)} className="ct-menu" style={{ background: "none", border: `1px solid ${T.border}`, borderRadius: 10, padding: "7px 9px", cursor: "pointer", display: "flex", alignItems: "center", color: T.muted, transition: "background 0.15s" }}>
-            <Menu size={20} />
-          </button>
+        <header style={{ borderBottom: `1px solid ${T.border}`, background: "rgba(10,10,15,0.92)", position: "sticky", top: 0, zIndex: 50, backdropFilter: "blur(12px)" }}>
+          <div style={{ maxWidth: 860, margin: "0 auto", padding: "15px 22px", display: "flex", justifyContent: "space-between", alignItems: "center" }}>
+            <Logo />
+            <button onClick={() => setMenuOpen(true)} className="ct-menu" style={{ background: "none", border: `1px solid ${T.border}`, borderRadius: 10, padding: "7px 9px", cursor: "pointer", display: "flex", alignItems: "center", color: T.muted, transition: "background 0.15s" }}>
+              <Menu size={20} />
+            </button>
+          </div>
         </header>
 
         {/* Hero */}

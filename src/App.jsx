@@ -439,7 +439,7 @@ function AboutModal({ onClose }) {
         <p style={{ fontSize: 13, color: T.teal, fontWeight: 600, marginBottom: 20 }}>Built by a Deaf founder who got tired of waiting on hold twice.</p>
 
         <p style={{ fontSize: 14, color: T.muted, lineHeight: 1.75, marginBottom: 16 }}>
-          Every time I called customer support through a relay interpreter, I waited once for the interpreter to connect — then again on hold. I built DialTrend so nobody has to call blind again.
+          Every time I called customer support through a relay interpreter, I waited once for the interpreter to connect then again on hold. I built DialTrend so nobody has to call blind again.
         </p>
 
         <p style={{ fontSize: 14, color: T.muted, lineHeight: 1.75, marginBottom: 24 }}>
@@ -450,9 +450,9 @@ function AboutModal({ onClose }) {
         <div style={{ background: "rgba(0,229,160,0.06)", border: `1px solid ${T.tealBorder}`, borderRadius: 14, padding: 16, marginBottom: 20 }}>
           <div style={{ fontSize: 12, fontWeight: 700, color: T.teal, marginBottom: 10, textTransform: "uppercase", letterSpacing: 1 }}>How our data works</div>
           {[
-            ["Baseline data", "Sourced from GetHuman's public crowdsourced reports — the most established community wait time database."],
+            ["Baseline data", "Sourced from GetHuman's public crowdsourced reports. The most established community wait time database."],
             ["Community reports", "Every time a user shares how long they waited, that report refines the hourly estimate for that company."],
-            ["Always anonymous", "No account, no tracking. A report is just a number — nothing tied to you personally."],
+            ["Always anonymous", "No account, no tracking. A report is just a number, nothing tied to you personally."],
           ].map(([title, body]) => (
             <div key={title} style={{ marginBottom: 12 }}>
               <div style={{ fontSize: 13, fontWeight: 700, color: T.text, marginBottom: 3 }}>{title}</div>

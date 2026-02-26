@@ -412,18 +412,79 @@ function HowItWorksPanel({ onClose }) {
   );
 }
 
-// ─── Hamburger Menu ───────────────────────────────────────────────────────────
-function HamburgerMenu({ onClose, onHowItWorks }) {
-  const items = [
-    { icon: HelpCircle, label: "How It Works", desc: "3-step walkthrough", action: onHowItWorks },
-    { icon: Info, label: "About DialTrend", desc: "How we collect wait time data", action: onClose },
-    { icon: MessageSquare, label: "Send Feedback", desc: "Help us improve", action: onClose },
-    { icon: Shield, label: "Privacy Policy", desc: "Anonymous, always", action: onClose },
-  ];
+// ─── About Modal ─────────────────────────────────────────────────────────────
+function AboutModal({ onClose }) {
   return (
     <>
+      <div onClick={onClose} style={{ position: "fixed", inset: 0, background: "rgba(0,0,0,0.75)", backdropFilter: "blur(6px)", zIndex: 300 }} />
+      <div style={{
+        position: "fixed", top: "50%", left: "50%", transform: "translate(-50%,-50%)",
+        background: T.surface, border: `1px solid ${T.border}`,
+        borderRadius: 24, padding: 36, width: "90%", maxWidth: 440, zIndex: 301,
+        boxShadow: "0 24px 80px rgba(0,0,0,0.6), 0 0 40px rgba(0,229,160,0.05)",
+        fontFamily: "'Syne', sans-serif", maxHeight: "85vh", overflowY: "auto",
+      }}>
+        <button onClick={onClose} style={{ position: "absolute", top: 16, right: 16, background: "none", border: "none", cursor: "pointer", color: T.muted }}>
+          <X size={20} />
+        </button>
+
+        {/* Logo mark */}
+        <div style={{ display: "flex", alignItems: "center", gap: 3, marginBottom: 20 }}>
+          {[10,16,22,16,10].map((h,i) => (
+            <div key={i} style={{ width: 4, height: h, borderRadius: 2, background: T.teal }} />
+          ))}
+        </div>
+
+        <h2 style={{ fontSize: 22, fontWeight: 800, color: T.text, marginBottom: 6 }}>About DialTrend</h2>
+        <p style={{ fontSize: 13, color: T.teal, fontWeight: 600, marginBottom: 20 }}>Built by a Deaf founder who got tired of waiting on hold twice.</p>
+
+        <p style={{ fontSize: 14, color: T.muted, lineHeight: 1.75, marginBottom: 16 }}>
+          Every time I called customer support through a relay interpreter, I waited once for the interpreter to connect — then again on hold. I built DialTrend so nobody has to call blind again.
+        </p>
+
+        <p style={{ fontSize: 14, color: T.muted, lineHeight: 1.75, marginBottom: 24 }}>
+          DialTrend shows you the least busy hours to call any major support line, and tells you whether a real human agent is available before you dial. The data starts from GetHuman public community reports and improves with every wait time shared by our users.
+        </p>
+
+        {/* Data trust section */}
+        <div style={{ background: "rgba(0,229,160,0.06)", border: `1px solid ${T.tealBorder}`, borderRadius: 14, padding: 16, marginBottom: 20 }}>
+          <div style={{ fontSize: 12, fontWeight: 700, color: T.teal, marginBottom: 10, textTransform: "uppercase", letterSpacing: 1 }}>How our data works</div>
+          {[
+            ["Baseline data", "Sourced from GetHuman's public crowdsourced reports — the most established community wait time database."],
+            ["Community reports", "Every time a user shares how long they waited, that report refines the hourly estimate for that company."],
+            ["Always anonymous", "No account, no tracking. A report is just a number — nothing tied to you personally."],
+          ].map(([title, body]) => (
+            <div key={title} style={{ marginBottom: 12 }}>
+              <div style={{ fontSize: 13, fontWeight: 700, color: T.text, marginBottom: 3 }}>{title}</div>
+              <div style={{ fontSize: 12, color: T.faint, lineHeight: 1.6 }}>{body}</div>
+            </div>
+          ))}
+        </div>
+
+        <div style={{ fontSize: 12, color: T.faint, textAlign: "center", paddingTop: 8, borderTop: `1px solid ${T.border}` }}>
+          dialtrend.com · Free forever · Community-powered
+        </div>
+      </div>
+    </>
+  );
+}
+
+// ─── Hamburger Menu ───────────────────────────────────────────────────────────
+function HamburgerMenu({ onClose, onHowItWorks }) {
+  const [showAbout, setShowAbout] = useState(false);
+
+  const items = [
+    { icon: HelpCircle, label: "How It Works", desc: "See the 3-step walkthrough", action: onHowItWorks },
+    { icon: Info,        label: "About DialTrend", desc: "Our story & how data is collected", action: () => setShowAbout(true) },
+    { icon: MessageSquare, label: "Send Feedback", desc: "Found an error? Have a suggestion?", action: onClose },
+    { icon: Shield,      label: "Privacy Policy", desc: "No tracking. No accounts. Ever.", action: onClose },
+  ];
+
+  return (
+    <>
+      {showAbout && <AboutModal onClose={() => setShowAbout(false)} />}
       <div onClick={onClose} style={{ position: "fixed", inset: 0, background: "rgba(0,0,0,0.6)", backdropFilter: "blur(4px)", zIndex: 200 }} />
-      <div style={{ position: "fixed", top: 0, right: 0, bottom: 0, width: 280, background: T.surface, borderLeft: `1px solid ${T.border}`, zIndex: 201, boxShadow: "-8px 0 40px rgba(0,0,0,0.4)", display: "flex", flexDirection: "column", fontFamily: "'Syne', sans-serif", animation: "slideIn 0.25s ease" }}>
+      <div style={{ position: "fixed", top: 0, right: 0, bottom: 0, width: 290, background: T.surface, borderLeft: `1px solid ${T.border}`, zIndex: 201, boxShadow: "-8px 0 40px rgba(0,0,0,0.4)", display: "flex", flexDirection: "column", fontFamily: "'Syne', sans-serif", animation: "slideIn 0.25s ease" }}>
         <div style={{ padding: "18px 22px", borderBottom: `1px solid ${T.border}`, display: "flex", justifyContent: "space-between", alignItems: "center" }}>
           <Logo />
           <button onClick={onClose} style={{ background: "none", border: "none", cursor: "pointer", color: T.muted }}><X size={20} /></button>
@@ -641,14 +702,12 @@ export default function DialTrendApp() {
         {menuOpen && <HamburgerMenu onClose={() => setMenuOpen(false)} onHowItWorks={() => { setMenuOpen(false); setShowOnboarding(true); }} />}
         {showOnboarding && <HowItWorksPanel onClose={() => setShowOnboarding(false)} />}
 
-        {/* Header */}
-        <header style={{ borderBottom: `1px solid ${T.border}`, background: "rgba(10,10,15,0.92)", position: "sticky", top: 0, zIndex: 50, backdropFilter: "blur(12px)" }}>
-          <div style={{ maxWidth: 860, margin: "0 auto", padding: "15px 22px", display: "flex", justifyContent: "space-between", alignItems: "center" }}>
-            <Logo />
-            <button onClick={() => setMenuOpen(true)} className="ct-menu" style={{ background: "none", border: `1px solid ${T.border}`, borderRadius: 10, padding: "7px 9px", cursor: "pointer", display: "flex", alignItems: "center", color: T.muted, transition: "background 0.15s" }}>
-              <Menu size={20} />
-            </button>
-          </div>
+        {/* Header — full width, logo left, menu right */}
+        <header style={{ borderBottom: `1px solid ${T.border}`, background: "rgba(10,10,15,0.92)", position: "sticky", top: 0, zIndex: 50, backdropFilter: "blur(12px)", padding: "15px 28px", display: "flex", justifyContent: "space-between", alignItems: "center" }}>
+          <Logo />
+          <button onClick={() => setMenuOpen(true)} className="ct-menu" style={{ background: "none", border: `1px solid ${T.border}`, borderRadius: 10, padding: "7px 9px", cursor: "pointer", display: "flex", alignItems: "center", color: T.muted, transition: "background 0.15s" }}>
+            <Menu size={20} />
+          </button>
         </header>
 
         {/* Hero */}
